@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { ServiceService } from 'src/app/services/service.service';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private service:ServiceService) { }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -20,7 +21,8 @@ export class LoginComponent implements OnInit {
   }
 
   login(value){
-    //console.log(value);
+    console.log("LoginComponents login");
+    this.service.getKeycloakTokens(value.username, value.password);
   }
 
 }
