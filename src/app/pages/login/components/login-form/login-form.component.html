@@ -1,5 +1,5 @@
 <!-- Default form login -->
-<form [formGroup]="loginForm" class="text-center z-depth-1-half p-5" (submit)="submit(loginForm.value)">
+<form [formGroup]="loginForm" class="text-center black-border z-depth-1-half p-5" (submit)="submit(loginForm.value)">
 
     <p class="h4 mb-4">Login</p>
 
@@ -10,7 +10,6 @@
     <input type="password" formControlName="password" id="defaultLoginFormPassword" class="form-control mb-4" placeholder="Password">
 
     <!-- Sign in button -->
-    <button mdbBtn color="info" block="true" [disabled]="!loginForm.valid" type="submit">Sign in</button>
-
+    <button mdbBtn class="btn btn-outline-elegant" color="info" block="true" [disabled]="!loginForm.valid" type="submit">Sign in</button>
 </form>
 <!-- Default form login -->

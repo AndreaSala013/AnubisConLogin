@@ -2,3 +2,9 @@
 html, body {
     height: 100%;
 }
+input[type=password]:focus:not([readonly]),
+input[type=username]:focus:not([readonly]) {
+    border: 1px solid lightgray;
+    box-shadow: 0 0 0 0.2rem lightgray;
+}
+
