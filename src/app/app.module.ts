@@ -8,12 +8,14 @@ import { LoginComponent } from './pages/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginFormComponent } from './pages/login/components/login-form/login-form.component';
 import { HttpClientModule } from '@angular/common/http';
+import { LoaderComponent } from './shared/loader/loader/loader.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,

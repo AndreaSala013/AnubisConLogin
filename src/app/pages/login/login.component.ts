@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ServiceService } from 'src/app/services/service.service';
+import { ServletResponse } from 'src/app/model/ServletResponde';
 
 @Component({
   selector: 'app-login',
@@ -9,6 +10,7 @@ import { ServiceService } from 'src/app/services/service.service';
 })
 export class LoginComponent implements OnInit {
 
+  isLoading: boolean = false;
   loginForm: FormGroup;
 
   constructor(private fb: FormBuilder, private service:ServiceService) { }
@@ -20,9 +22,16 @@ export class LoginComponent implements OnInit {
     })
   }
 
-  login(value){
-    console.log("LoginComponents login");
-    this.service.getKeycloakTokens(value.username, value.password);
+  async login(value){
+    this.isLoading = true;
+    let servletResp : ServletResponse = await this.service.getKeycloakTokens(value.username, value.password);
+    this.isLoading = false;
+    if(servletResp.status != 200){
+      alert(servletResp.message);
+    }
+    else{
+      
+    }
   }
 
 }
