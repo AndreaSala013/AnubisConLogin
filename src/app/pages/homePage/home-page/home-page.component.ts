@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import { LOCAL_STORAGE, WebStorageService } from 'angular-webstorage-service';
+import { Router } from '@angular/router';
+import { AppUtils } from 'src/app/utils/AppUtils';
 
 @Component({
   selector: 'app-home-page',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomePageComponent implements OnInit {
 
-  constructor() { }
+  
+
+  constructor(private router:Router,
+    @Inject(LOCAL_STORAGE) private storage: WebStorageService) { }
 
   ngOnInit() {
+    if(this.storage.get(AppUtils.KEY_CLOAK_TOKENS) == null){
+      AppUtils.goToLoginPage(this.router);
+    }
   }
 
+  logout(event){
+    this.storage.remove(AppUtils.KEY_CLOAK_TOKENS);
+    AppUtils.goToLoginPage(this.router);
+  }
+
+
+  
 }

@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import {  tap } from "rxjs/operators";
@@ -8,8 +9,6 @@ import { ServletResponse } from '../model/ServletResponde';
 })
 export class ServiceService {
 
-  baseUrl = "http://localhost:6060/testSpring/login";
-
   constructor(private http: HttpClient) { }
 
   getKeycloakTokens(username:string,password:string):Promise<ServletResponse> {
@@ -18,7 +17,7 @@ export class ServiceService {
       .set("username", username)
       .set("password", password);
 
-    let url = this.baseUrl;
+    let url = environment.keycloakBaseUrl + environment.keycloakWarName + environment.keycloakLoginService;
     return this.http
       .get<ServletResponse>( url, { params})
       .pipe(

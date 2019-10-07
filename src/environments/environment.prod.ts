@@ -1,3 +1,6 @@
 export const environment = {
-  production: true
+  production: true,
+  keycloakBaseUrl : "http://localhost:6060/",
+  keycloakWarName : "testSpring",
+  keycloakLoginService : "/login"
 };

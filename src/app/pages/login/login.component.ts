@@ -4,6 +4,7 @@ import { ServiceService } from 'src/app/services/service.service';
 import { ServletResponse } from 'src/app/model/ServletResponde';
 import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
 import { Router } from '@angular/router';
+import { AppUtils } from 'src/app/utils/AppUtils';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
-
-  KEY_CLOAK_TOKENS = "KeyCloakTokens";
 
   isLoading: boolean = false;
   loginForm: FormGroup;
@@ -23,8 +22,8 @@ export class LoginComponent implements OnInit {
     private router:Router) { }
 
   ngOnInit() {
-    if(this.storage.get(this.KEY_CLOAK_TOKENS) != null){
-      this.goToHomePage();
+    if(this.storage.get(AppUtils.KEY_CLOAK_TOKENS) != null){
+      AppUtils.goToHomePage(this.router);
     }else{
       this.loginForm = this.fb.group({
         username: ['',Validators.required],
@@ -42,16 +41,14 @@ export class LoginComponent implements OnInit {
     }
     else{
       this.saveInLocalStorage(servletResp.message);
-      this.goToHomePage();
+      AppUtils.goToHomePage(this.router);
     }
   }
 
   saveInLocalStorage(keycloakTokens){
-    this.storage.set(this.KEY_CLOAK_TOKENS, keycloakTokens);
+    this.storage.set(AppUtils.KEY_CLOAK_TOKENS, keycloakTokens);
   }
 
-  goToHomePage(){
-    this.router.navigate(['/home']);
-  }
+  
 
 }
