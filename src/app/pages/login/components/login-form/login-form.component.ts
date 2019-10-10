@@ -22,6 +22,9 @@ export class LoginFormComponent implements OnInit {
 
   submit(formValue){
     this.onSubmitLoginForm.emit(formValue);
+    //window.open("http://localhost:8080/river_x_webapp_war/");
+    //window.open("http://localhost:8080/dcode_developer_war/");
+    
   }
 
 }

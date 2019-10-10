@@ -1,1 +1,8 @@
-<app-topbar (onLogout)="logout($event)">HOME PAGE</app-topbar>
+<app-topbar (onLogout)="logout($event)"></app-topbar>
+
+<div *ngIf="isLoading; else notLoading">
+    <app-loader></app-loader>
+</div>
+<ng-template #notLoading>
+    <img class="img-fluid" alt="Responsive image" src="assets/images/anubis.gif">     
+  </ng-template>

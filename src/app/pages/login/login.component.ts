@@ -1,10 +1,11 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { ServiceService } from 'src/app/services/service.service';
-import { ServletResponse } from 'src/app/model/ServletResponde';
 import {LOCAL_STORAGE, WebStorageService} from 'angular-webstorage-service';
 import { Router } from '@angular/router';
 import { AppUtils } from 'src/app/utils/AppUtils';
+import { KeyCloakService } from 'src/app/services/key-cloak.service';
+import { KeycloakTokens } from 'src/app/model/KeycloakTokens';
+import { PortainerService } from 'src/app/services/portainer.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
   constructor(private fb: FormBuilder, 
-    private service:ServiceService,
+    private kService:KeyCloakService,
+    private pService : PortainerService,
     @Inject(LOCAL_STORAGE) private storage: WebStorageService,
     private router:Router) { }
 
@@ -33,14 +35,17 @@ export class LoginComponent implements OnInit {
   }
 
   async login(value){
+    console.log("login");
     this.isLoading = true;
-    let servletResp : ServletResponse = await this.service.getKeycloakTokens(value.username, value.password);
+    let portainerToken = await this.pService.getPortainerToken();
+    console.log(portainerToken);
+    let keycloakTokens : KeycloakTokens = await this.kService.getKeycloakTokens(value.username, value.password);
     this.isLoading = false;
-    if(servletResp.status != 200){
-      alert(servletResp.message);
+    if(keycloakTokens == null){
+      alert("Username o password errati");
     }
     else{
-      this.saveInLocalStorage(servletResp.message);
+      this.saveInLocalStorage(keycloakTokens);
       AppUtils.goToHomePage(this.router);
     }
   }
